@@ -4,52 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
 using CodeBinding;
+using System.Windows.Data;
+using System.Diagnostics.Contracts;
 
 namespace CodeBinding.Rx
 {
     public static class ObservableEx
     {
-
-        static object s1, s2;
-
+        /// <summary>
+        /// Creates 
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public static IObservable<TResult> FromExpression<TResult>(Expression<Func<TResult>> expression)
         {
-            BindingTarget<TResult> obj = new BindingTarget<TResult>();
-            Expression<Func<bool>> expr = () => obj.Value == null;
-            var visitor = new ObservableExVisitor(expression.Body);
-            expr = (Expression<Func<bool>>)visitor.Visit(expr);
-            System.Windows.Data.BindingBase binding = BindingEx.FromExpression(expr);
-            s1 = obj;
-            s2 = binding;
-            return obj.ToObservable();
-        }
-    }
+            Contract.Requires(expression != null);
+            Contract.Ensures(Contract.Result<IObservable<TResult>>() != null);
 
-    internal class ObservableExVisitor : ExpressionVisitor
-    {
-        private Expression m_Expression;
+            // Create target object
+            BindingTarget<TResult> target = new BindingTarget<TResult>();
 
-        public ObservableExVisitor(Expression expression)
-        {
-            m_Expression = expression;
-        }
+            // Create expression which can be used to create bingind
+            // () => target.Value == <expression.Body>
+            Expression<Func<bool>> expr = Expression.Lambda<Func<bool>>(
+                Expression.Equal(
+                    Expression.Property(Expression.Constant(target), "Value"),
+                    expression.Body));
+            // Create binding
+            BindingBase binding = BindingEx.FromExpression(expr);
 
-        protected override Expression VisitBinary(BinaryExpression node)
-        {
-            Expression left = Visit(node.Left);
-            Expression right = Visit(node.Right);
-
-            return Expression.Equal(left, right);
-        }
-
-        protected override Expression VisitConstant(ConstantExpression node)
-        {
-            return (node.Value == null) ? m_Expression : base.VisitConstant(node);
-        }
-
-        protected override Expression VisitUnary(UnaryExpression node)
-        {
-            return (node.NodeType == ExpressionType.Convert) ? node.Operand : base.VisitUnary(node);
+            // Crete IObservable from target
+            return target.ToObservable();
         }
     }
 }
