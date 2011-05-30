@@ -118,7 +118,7 @@ namespace CodeBinding
             }
         }
 
-        public class CustomConverterVisitor : ExpressionVisitor
+        internal class CustomConverterVisitor : ExpressionVisitor
         {
             public List<Binding> Bindings { get; private set; }
             public List<ParameterExpression> Parameters { get; private set; }
@@ -225,18 +225,21 @@ namespace CodeBinding
     {
         private Delegate m_delegate;
         private Type[] m_ParametersType;
-        private Lazy<Lazy<object>[]> m_ParametersDefaultValues;
+        private object[] m_ParametersDefaultValues;
 
         public DelegateMultiValueConverter(Delegate converter)
         {
             m_delegate = converter;
             m_ParametersType = m_delegate.Method.GetParameters().Skip(1).Select(p => p.ParameterType).ToArray();
-            m_ParametersDefaultValues = new Lazy<Lazy<object>[]>(GetParameterDefaultValues);
         }
 
-        private Lazy<object>[] GetParameterDefaultValues()
+        private void CreateParameterDefaultValues()
         {
-            return m_ParametersType.Select(pt => new Lazy<object>(() => pt.IsValueType ?  Activator.CreateInstance(pt) : null)).ToArray();
+            m_ParametersDefaultValues = new object[m_ParametersType.Length];
+            for (int i = 0; i < m_ParametersType.Length; i++)
+            {
+                m_ParametersDefaultValues[i] = m_ParametersType[i].IsValueType ? Activator.CreateInstance(m_ParametersType[i]) : null;
+            }
         }
 
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -248,9 +251,10 @@ namespace CodeBinding
 
             for (int i = 0; i < values.Length; i++)
             {
+                if (m_ParametersDefaultValues == null) CreateParameterDefaultValues();
                 if (values[i] == System.Windows.DependencyProperty.UnsetValue)
                 {
-                    values[i] = m_ParametersDefaultValues.Value[i].Value;
+                    values[i] = m_ParametersDefaultValues[i];
                 }
             }
             return m_delegate.DynamicInvoke(values);
