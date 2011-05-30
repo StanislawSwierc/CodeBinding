@@ -18,34 +18,37 @@ namespace CodeBinding
 
         public static BindingBase FromExpression(Expression<Func<bool>> expression, BindingMode mode)
         {
-            if (expression.Body.NodeType != ExpressionType.Equal)
-            {
-                throw new ArgumentException("expression has to have a == expr structure");
-            }
-            BinaryExpression node = (BinaryExpression)expression.Body;
+            MemberExpression member = null;
+            Expression right = null;
 
-            if (node.Left.NodeType != ExpressionType.MemberAccess)
+            if (expression.Body.NodeType == ExpressionType.Equal)
             {
-                throw new ArgumentException("left side of the expression has to be member access expression");
+                var binary = ((BinaryExpression)expression.Body);
+                right = binary.Right;
+                member = binary.Left as MemberExpression;
+                if (member != null && member.Member.MemberType != MemberTypes.Property)
+                {
+                    // Invalidate member because it isn't a Property
+                    member = null;
+                }
             }
-            MemberExpression member = (MemberExpression)node.Left;
+            if (member == null)
+            {
+                throw new ArgumentException("expression has to have \"<target object expression>.<target property> == <expr>\" structure");
+            }
 
-            if (member.Member.MemberType != MemberTypes.Property)
-            {
-                throw new ArgumentException("left side of the expression has to be property access expression");
-            }
             PropertyInfo property = (PropertyInfo)member.Member;
             Expression<Func<object>> targetLambda = Expression.Lambda<Func<object>>(member.Expression);
             object target = targetLambda.Compile().Invoke();
             System.Windows.FrameworkElement element = target as System.Windows.FrameworkElement;
             if (element == null)
             {
-                throw new ArgumentException("target has to be System.Windows.FrameworkElement");
+                throw new ArgumentException("target object has to be System.Windows.FrameworkElement");
             }
 
             System.Windows.DependencyProperty dproperty = GetDependencyPropety(element.GetType(), property);
 
-            BindingBase binding = CreateBinding(node.Right, mode);
+            BindingBase binding = CreateBinding(right, mode);
             element.SetBinding(dproperty, binding);
             //element.GetBindingExpression(dproperty).UpdateTarget();
             return binding;
@@ -78,7 +81,7 @@ namespace CodeBinding
             }
         }
 
-        public static BindingBase CreateBinding(Expression expression, BindingMode mode)
+        private static BindingBase CreateBinding(Expression expression, BindingMode mode)
         {
             var visitor = new CustomConverterVisitor();
 
