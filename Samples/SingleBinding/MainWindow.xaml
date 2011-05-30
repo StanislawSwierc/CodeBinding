@@ -1,0 +1,23 @@
+﻿<Window x:Class="SingleBinding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="Auto" Width="500" SizeToContent="Height" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="binding:"  VerticalAlignment="Center" Margin="10,0,0,0"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="slider:"  VerticalAlignment="Center" Margin="10,0,0,0"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="textBox:"  VerticalAlignment="Center" Margin="10,0,0,0"/>
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="() => textBox.FontSize == slider.Value"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Slider Grid.Column="1" Grid.Row="1" Name="slider" Value="10" Maximum="30" Minimum="1"  />
+        <TextBlock Grid.Column="1" Grid.Row="2" Name="textBox" Text="Drag slider to resize this text" TextAlignment="Center" />
+        
+    </Grid>
+</Window>

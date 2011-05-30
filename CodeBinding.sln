@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{39DC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserRegistration.Rx", "Samples\UserRegistration.Rx\UserRegistration.Rx.csproj", "{C8EEBF73-599A-436D-BC09-E8B99C9CB5C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingleBinding", "Samples\SingleBinding\SingleBinding.csproj", "{0293F500-9354-4996-9780-9E8C550208E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,11 +51,22 @@ Global
 		{C8EEBF73-599A-436D-BC09-E8B99C9CB5C5}.Release|Mixed Platforms.Build.0 = Release|x86
 		{C8EEBF73-599A-436D-BC09-E8B99C9CB5C5}.Release|x86.ActiveCfg = Release|x86
 		{C8EEBF73-599A-436D-BC09-E8B99C9CB5C5}.Release|x86.Build.0 = Release|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Debug|x86.ActiveCfg = Debug|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Debug|x86.Build.0 = Debug|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Release|Any CPU.ActiveCfg = Release|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Release|Mixed Platforms.Build.0 = Release|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Release|x86.ActiveCfg = Release|x86
+		{0293F500-9354-4996-9780-9E8C550208E7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C8EEBF73-599A-436D-BC09-E8B99C9CB5C5} = {39DCEC87-E8B5-4B39-B8C6-6A155F564E3B}
+		{0293F500-9354-4996-9780-9E8C550208E7} = {39DCEC87-E8B5-4B39-B8C6-6A155F564E3B}
 	EndGlobalSection
 EndGlobal
