@@ -244,6 +244,7 @@ namespace CodeBinding
 
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            object result = null;
             if (targetType != m_delegate.Method.ReturnType)
             {
                 throw new ArgumentException("targetType");
@@ -251,13 +252,24 @@ namespace CodeBinding
 
             for (int i = 0; i < values.Length; i++)
             {
-                if (m_ParametersDefaultValues == null) CreateParameterDefaultValues();
                 if (values[i] == System.Windows.DependencyProperty.UnsetValue)
                 {
+                    // Create default values first time they are needed
+                    if (m_ParametersDefaultValues == null) CreateParameterDefaultValues();
                     values[i] = m_ParametersDefaultValues[i];
                 }
             }
-            return m_delegate.DynamicInvoke(values);
+
+            try
+            {
+                result = m_delegate.DynamicInvoke(values);
+            }
+            catch (TargetInvocationException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                result = System.Windows.DependencyProperty.UnsetValue;
+            }
+            return result;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
