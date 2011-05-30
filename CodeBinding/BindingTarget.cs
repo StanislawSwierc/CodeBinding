@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace CodeBinding
 {
-    public class BindingTarget<T> : FrameworkElement
+    internal class BindingTarget<T> : FrameworkElement
     {
         public T Value
         {
