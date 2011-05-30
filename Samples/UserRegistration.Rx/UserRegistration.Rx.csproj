@@ -36,14 +36,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ReactiveUI">
-      <HintPath>..\..\packages\reactiveui-core.2.3.0.1\lib\Net4\ReactiveUI.dll</HintPath>
+    <Reference Include="ReactiveUI, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\reactiveui-core.2.3.1.0\lib\Net4\ReactiveUI.dll</HintPath>
     </Reference>
-    <Reference Include="ReactiveUI.Blend">
-      <HintPath>..\..\packages\reactiveui-xaml.2.3.0.1\lib\Net4\ReactiveUI.Blend.dll</HintPath>
+    <Reference Include="ReactiveUI.Blend, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\reactiveui-xaml.2.3.1.0\lib\Net4\ReactiveUI.Blend.dll</HintPath>
     </Reference>
-    <Reference Include="ReactiveUI.Xaml">
-      <HintPath>..\..\packages\reactiveui-xaml.2.3.0.1\lib\Net4\ReactiveUI.Xaml.dll</HintPath>
+    <Reference Include="ReactiveUI.Xaml, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\reactiveui-xaml.2.3.1.0\lib\Net4\ReactiveUI.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -120,6 +123,9 @@
       <Project>{5F5CB969-D0BB-4B5A-8141-1005881E23A8}</Project>
       <Name>CodeBinding</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
