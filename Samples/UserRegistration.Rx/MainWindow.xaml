@@ -1,0 +1,10 @@
+﻿<Window x:Class="HelloReactiveUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="Auto" Width="525" SizeToContent="Height">
+    <StackPanel>
+        <TextBox Text="{Binding Path=Password, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+        <TextBox Text="{Binding Path=PasswordConfirmation, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+        <Button Content="OK" Command="{Binding Path=OkCommand}" Margin="3" />
+    </StackPanel>
+</Window>
