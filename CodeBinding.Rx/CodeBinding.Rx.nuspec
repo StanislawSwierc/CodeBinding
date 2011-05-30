@@ -13,6 +13,7 @@
     <language>es-US</language>
     <tags>wpf,binding,Rx,Reactive,extensions,Observable</tags>
     <dependencies>
+      <dependency id="CodeBinding" version="1.0.0.0" />
       <dependency id="Rx-Main" version="1.1.10425" />
     </dependencies>
   </metadata>
