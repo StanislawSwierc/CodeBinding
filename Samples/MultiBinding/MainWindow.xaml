@@ -1,0 +1,32 @@
+﻿<Window x:Class="MultiBinding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" >
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="arg1:"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="arg2:"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="arg3:"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="arg4:"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="result:"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="binding:"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBox Grid.Column="1" Grid.Row="0" x:Name="arg1"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBox Grid.Column="1" Grid.Row="1" x:Name="arg2"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBox Grid.Column="1" Grid.Row="2" x:Name="arg3"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBox Grid.Column="1" Grid.Row="3" x:Name="arg4"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBlock Grid.Column="1" Grid.Row="4" x:Name="result"  VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="() => result.Text == (1000 * int.Parse(arg1.Text) + 100 * int.Parse(arg2.Text) + 10 * int.Parse(arg3.Text) + int.Parse(arg4.Text)).ToString()" VerticalAlignment="Center" Margin="10,0,10,0"/>
+        
+    </Grid>
+</Window>

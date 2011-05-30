@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBinding.Rx (net35)", "C
 		{A83663D3-6899-4E65-AC31-C076AF32197A} = {A83663D3-6899-4E65-AC31-C076AF32197A}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiBinding", "Samples\MultiBinding\MultiBinding.csproj", "{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,16 @@ Global
 		{750A8DBF-A6C4-4B2C-8E11-47FC8A285347}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{750A8DBF-A6C4-4B2C-8E11-47FC8A285347}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{750A8DBF-A6C4-4B2C-8E11-47FC8A285347}.Release|x86.ActiveCfg = Release|Any CPU
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Debug|x86.ActiveCfg = Debug|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Debug|x86.Build.0 = Debug|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Release|Any CPU.ActiveCfg = Release|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Release|Mixed Platforms.Build.0 = Release|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Release|x86.ActiveCfg = Release|x86
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,5 +112,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C8EEBF73-599A-436D-BC09-E8B99C9CB5C5} = {39DCEC87-E8B5-4B39-B8C6-6A155F564E3B}
 		{0293F500-9354-4996-9780-9E8C550208E7} = {39DCEC87-E8B5-4B39-B8C6-6A155F564E3B}
+		{CE6FB820-220A-4BF0-B3F5-C44F06BDE459} = {39DCEC87-E8B5-4B39-B8C6-6A155F564E3B}
 	EndGlobalSection
 EndGlobal
