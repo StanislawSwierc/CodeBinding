@@ -44,14 +44,6 @@ namespace HelloReactiveUI
                 Password == PasswordConfirmation &&
                 Password.Length > 3);
 
-            //var canHitOk = ObservableEx.FromExpression(() =>
-            //    !string.IsNullOrEmpty(Password)
-                
-            //).Do(b => System.Diagnostics.Trace.WriteLine(b));
-
-            //ObservableProperty<bool> obj = new ObservableProperty<bool>();
-            //BindingBase binding = BindingEx.FromExpression(() => obj.Property == string.IsNullOrEmpty(Password));
-
             // Feed this to the canExecute of the OkCommand - now the button is
             // bound to the two properties and will disable itself until the
             // Func above is true.
