@@ -20,4 +20,4 @@ Change log
 ----------
 
 1.0.0.0
-IObservable<> object generation from lambda expressions
+* IObservable<> object generation from lambda expressions
