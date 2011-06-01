@@ -17,7 +17,7 @@ namespace CodeBinding
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (targetType != m_Delegate.Method.ReturnType)
+            if (!targetType.IsAssignableFrom(m_Delegate.Method.ReturnType))
             {
                 throw new ArgumentException("targetType");
             }
