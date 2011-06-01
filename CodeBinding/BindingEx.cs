@@ -6,18 +6,43 @@ using System.Windows.Data;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace CodeBinding
 {
     public static class BindingEx
     {
-        public static BindingBase FromExpression(Expression<Func<bool>> expression)
+        /// <summary>
+        /// Creates binding and attaches it to the target based on expression provided
+        /// </summary>
+        /// <remarks>
+        /// Expression has to be of type (target object expression).(target property) == (source expression)
+        /// </remarks>
+        /// <param name="expression">
+        /// Input expression of type: (target object expression).(target property) == (source expression)
+        /// </param>
+        /// <returns>IDisposable object used disable binding.</returns>
+        public static IDisposable BindFromExpression(Expression<Func<bool>> expression)
         {
-            return FromExpression(expression, BindingMode.Default);
+            return BindFromExpression(expression, BindingMode.Default);
         }
 
-        public static BindingBase FromExpression(Expression<Func<bool>> expression, BindingMode mode)
+        /// <summary>
+        /// Creates binding and attaches it to the target based on expression provided
+        /// </summary>
+        /// <remarks>
+        /// Expression has to be of type (target object expression).(target property) == (source expression)
+        /// </remarks>
+        /// <param name="expression">
+        /// Expression of type: (target object expression).(target property) == (source expression)
+        /// </param>
+        /// <param name="mode">Direction of the data flow in a binding.</param>
+        /// <returns>IDisposable object used disable binding.</returns>
+        public static IDisposable BindFromExpression(Expression<Func<bool>> expression, BindingMode mode)
         {
+            Contract.Requires(expression != null);
+            Contract.Ensures(Contract.Result<IDisposable>() != null);
+
             MemberExpression member = null;
             Expression right = null;
 
@@ -38,7 +63,7 @@ namespace CodeBinding
             }
 
             PropertyInfo property = (PropertyInfo)member.Member;
-            
+
             object target = GetInstanceFromExpression(member.Expression);
             BindingBase binding = CreateBinding(right, mode);
 
@@ -48,22 +73,49 @@ namespace CodeBinding
             {
                 dproperty = GetDependencyPropety(element.GetType(), property);
             }
-            if(dproperty == null)
+            if (dproperty == null)
             {
                 // target object isn't FrameworkElement or the property isn't DependencyProperty
-                if(mode== BindingMode.Default || mode == BindingMode.OneWayToSource || mode == BindingMode.TwoWay)
+                if (mode == BindingMode.Default || mode == BindingMode.OneWayToSource || mode == BindingMode.TwoWay)
                 {
                     throw new ArgumentException(string.Format("Property \"{0}\" needs to be DependencyProperty in order to bind in mode \"{1}\"",
                         property.Name, mode));
                 }
-                
+
                 // Property cannot be binding target. Create wrapper
                 element = new BindingTarget(target, property);
                 binding.FallbackValue = element;
                 dproperty = BindingTarget.ValueProperty;
             }
             element.SetBinding(dproperty, binding);
-            return binding;
+
+            return new ClearBindingDisposable(element, dproperty, binding);
+        }
+
+        /// <summary>
+        /// Creates binding base on expression provided.
+        /// </summary>
+        /// <typeparam name="T">Type of the binding target property.</typeparam>
+        /// <param name="expression">Expression of any type.</param>
+        /// <returns>Binding object</returns>
+        public static BindingBase FromExpression<T>(Expression<Func<T>> expression)
+        {
+            return FromExpression(expression, BindingMode.Default);
+        }
+
+        /// <summary>
+        /// Creates binding base on expression provided
+        /// </summary>
+        /// <typeparam name="T">Type of the binding target property</typeparam>
+        /// <param name="expression">Expression of any type</param>
+        /// <param name="mode">Direction of the data flow in a binding.</param>
+        /// <returns>Binding object.</returns>
+        public static BindingBase FromExpression<T>(Expression<Func<T>> expression, BindingMode mode)
+        {
+            Contract.Requires(expression != null);
+            Contract.Ensures(Contract.Result<BindingBase>() != null);
+
+            return CreateBinding(expression.Body, mode);
         }
 
         private static object GetInstanceFromExpression(Expression expression)
@@ -101,6 +153,9 @@ namespace CodeBinding
 
         private static BindingBase CreateBinding(Expression expression, BindingMode mode)
         {
+            Contract.Requires(expression != null);
+            Contract.Ensures(Contract.Result<BindingBase>() != null);
+
             var visitor = new CustomConverterVisitor();
 
             Expression converterExpression = visitor.ProcessExpression(expression);
