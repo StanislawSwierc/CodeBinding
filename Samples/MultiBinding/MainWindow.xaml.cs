@@ -23,7 +23,19 @@ namespace MultiBinding
         public MainWindow()
         {
             InitializeComponent();
-            BindingEx.FromExpression(() => result.Text == (1000 * int.Parse(arg1.Text) + 100 * int.Parse(arg2.Text) + 10 * int.Parse(arg3.Text) + int.Parse(arg4.Text)).ToString());
+            BindingEx.BindFromExpression(() => result.Text == (1000 * TryParse(arg1.Text, 0) + 100 * TryParse(arg2.Text, 0) + 10 * TryParse(arg3.Text, 0) + TryParse(arg4.Text, 0)).ToString());
+        }
+
+        public static int TryParse(string s, int fallback)
+        {
+            int result;
+            if(int.TryParse(s, out result))
+            {
+                return result;
+            }else
+            {
+                return fallback;
+            }
         }
     }
 }

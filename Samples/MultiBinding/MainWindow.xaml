@@ -26,7 +26,7 @@
         <TextBox Grid.Column="1" Grid.Row="2" x:Name="arg3"  VerticalAlignment="Center" Margin="10,0,10,0"/>
         <TextBox Grid.Column="1" Grid.Row="3" x:Name="arg4"  VerticalAlignment="Center" Margin="10,0,10,0"/>
         <TextBlock Grid.Column="1" Grid.Row="4" x:Name="result"  VerticalAlignment="Center" Margin="10,0,10,0"/>
-        <TextBox Grid.Column="1" Grid.Row="5" Text="() => result.Text == (1000 * int.Parse(arg1.Text) + 100 * int.Parse(arg2.Text) + 10 * int.Parse(arg3.Text) + int.Parse(arg4.Text)).ToString()" VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="() => result.Text == (1000 * TryParse(arg1.Text, 0) + 100 * TryParse(arg2.Text, 0) + 10 * TryParse(arg3.Text, 0) + TryParse(arg4.Text, 0)).ToString()" VerticalAlignment="Center" Margin="10,0,10,0"/>
         
     </Grid>
 </Window>
