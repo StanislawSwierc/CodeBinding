@@ -38,20 +38,38 @@ namespace CodeBinding
             }
 
             PropertyInfo property = (PropertyInfo)member.Member;
-            Expression<Func<object>> targetLambda = Expression.Lambda<Func<object>>(member.Expression);
-            object target = targetLambda.Compile().Invoke();
-            System.Windows.FrameworkElement element = target as System.Windows.FrameworkElement;
-            if (element == null)
-            {
-                throw new ArgumentException("target object has to be System.Windows.FrameworkElement");
-            }
-
-            System.Windows.DependencyProperty dproperty = GetDependencyPropety(element.GetType(), property);
-
+            
+            object target = GetInstanceFromExpression(member.Expression);
             BindingBase binding = CreateBinding(right, mode);
+
+            System.Windows.FrameworkElement element = target as System.Windows.FrameworkElement;
+            System.Windows.DependencyProperty dproperty = null;
+            if (element != null)
+            {
+                dproperty = GetDependencyPropety(element.GetType(), property);
+            }
+            if(dproperty == null)
+            {
+                // target object isn't FrameworkElement or the property isn't DependencyProperty
+                if(mode== BindingMode.Default || mode == BindingMode.OneWayToSource || mode == BindingMode.TwoWay)
+                {
+                    throw new ArgumentException(string.Format("Property \"{0}\" needs to be DependencyProperty in order to bind in mode \"{1}\"",
+                        property.Name, mode));
+                }
+                
+                // Property cannot be binding target. Create wrapper
+                element = new BindingTarget(target, property);
+                binding.FallbackValue = element;
+                dproperty = BindingTarget.ValueProperty;
+            }
             element.SetBinding(dproperty, binding);
-            //element.GetBindingExpression(dproperty).UpdateTarget();
             return binding;
+        }
+
+        private static object GetInstanceFromExpression(Expression expression)
+        {
+            Expression<Func<object>> targetLambda = Expression.Lambda<Func<object>>(expression);
+            return targetLambda.Compile().Invoke();
         }
 
         public static System.Windows.DependencyProperty GetDependencyPropety(Type type, PropertyInfo property)
