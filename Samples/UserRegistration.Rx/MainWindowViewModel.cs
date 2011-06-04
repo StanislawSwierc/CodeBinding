@@ -31,7 +31,7 @@ namespace HelloReactiveUI
         
 
         public ICommand OkCommand { get; protected set; }
-        public ObservableBindingTarget<bool> canHitOk { get; protected set; }
+        public IObservable<bool> canHitOk { get; protected set; }
   
         public MainWindowViewModel()
         {
