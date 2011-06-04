@@ -42,7 +42,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BindingTargetExtensions.cs" />
+    <Compile Include="ObservableBindingTarget.cs" />
     <Compile Include="ObservableEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

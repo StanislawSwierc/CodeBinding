@@ -6,6 +6,8 @@ using System.Linq.Expressions;
 using CodeBinding;
 using System.Windows.Data;
 using System.Diagnostics.Contracts;
+using System.Reactive.Linq;
+using System.Reactive.Disposables;
 
 namespace CodeBinding.Rx
 {
@@ -17,13 +19,15 @@ namespace CodeBinding.Rx
         /// <typeparam name="TResult"></typeparam>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public static IObservable<TResult> FromExpression<TResult>(Expression<Func<TResult>> expression)
+        // TODO: Change return type back to IObserbable<TResult>
+        //       This will require client to save reference of the returned object
+        public static ObservableBindingTarget<TResult> FromExpression<TResult>(Expression<Func<TResult>> expression)
         {
             Contract.Requires(expression != null);
             Contract.Ensures(Contract.Result<IObservable<TResult>>() != null);
 
             // Create target object
-            BindingTarget<TResult> target = new BindingTarget<TResult>();
+            ObservableBindingTarget<TResult> target = new ObservableBindingTarget<TResult>();
 
             // Create expression which can be used to create bingind
             // () => target.Value == <expression.Body>
@@ -31,11 +35,11 @@ namespace CodeBinding.Rx
                 Expression.Equal(
                     Expression.Property(Expression.Constant(target), "Value"),
                     expression.Body));
+            
             // Create binding
-            BindingBase binding = BindingEx.FromExpression(expr);
+            BindingEx.BindFromExpression(expr);
 
-            // Crete IObservable from target
-            return target.ToObservable();
+            return target;
         }
     }
 }

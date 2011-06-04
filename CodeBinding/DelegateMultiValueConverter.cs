@@ -31,7 +31,6 @@ namespace CodeBinding
 
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            object result = null;
             if (targetType != m_Delegate.Method.ReturnType)
             {
                 throw new ArgumentException("targetType");
@@ -49,14 +48,13 @@ namespace CodeBinding
 
             try
             {
-                result = m_Delegate.DynamicInvoke(values);
+                return m_Delegate.DynamicInvoke(values);
             }
             catch (TargetInvocationException ex)
             {
-                Debug.WriteLine(ex.Message);
-                result = System.Windows.DependencyProperty.UnsetValue;
+                // Unwrap exception to knoe exactly what happen in the client code
+                throw ex.InnerException;
             }
-            return result;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)

@@ -31,15 +31,14 @@ namespace HelloReactiveUI
         
 
         public ICommand OkCommand { get; protected set; }
- 
+        public ObservableBindingTarget<bool> canHitOk { get; protected set; }
   
         public MainWindowViewModel()
         {
             // Here's the interesting part - we'll combine the change notifications
             // for Password and PasswordConfirmation, and that will determine when
             // we can hit the Ok button
-            //
-            var canHitOk = ObservableEx.FromExpression(() =>
+            canHitOk = ObservableEx.FromExpression(() =>
                 !string.IsNullOrEmpty(Password) &&
                 Password == PasswordConfirmation &&
                 Password.Length > 3);
