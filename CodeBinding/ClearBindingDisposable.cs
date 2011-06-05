@@ -28,7 +28,7 @@ namespace CodeBinding
         public void Dispose()
         {
             if (m_Target == null) throw new ObjectDisposedException("ClearBindingDisposable");
-            if (BindingOperations.GetBinding(m_Target, m_Property) == m_Binding)
+            if (object.ReferenceEquals(BindingOperations.GetBindingBase(m_Target, m_Property), m_Binding))
             {
                 BindingOperations.ClearBinding(m_Target, m_Property);
             }
