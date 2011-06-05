@@ -40,9 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingEx.cs" />
-    <Compile Include="DelegateMultiValueConverter.cs" />
-    <Compile Include="DelegateValueConverter.cs" />
     <Compile Include="ClearBindingDisposable.cs" />
+    <Compile Include="ExpressionValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BindingTarget.cs" />
   </ItemGroup>

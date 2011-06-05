@@ -170,8 +170,7 @@ namespace CodeBinding
                 result.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 if (converterExpression != null)
                 {
-                    var lambda = Expression.Lambda(converterExpression, visitor.Parameters);
-                    result.Converter = new DelegateValueConverter(lambda.Compile());
+                    result.Converter = new ExpressionValueConverter(expression);
                 }
                 return result;
             }
@@ -185,8 +184,7 @@ namespace CodeBinding
                     result.Bindings.Add(binding);
                 }
                 // MultiBinding requires converter
-                var lambda = Expression.Lambda(converterExpression, visitor.Parameters);
-                result.Converter = new DelegateMultiValueConverter(lambda.Compile());
+                result.Converter = new ExpressionValueConverter(expression);
                 return result;
             }
         }
