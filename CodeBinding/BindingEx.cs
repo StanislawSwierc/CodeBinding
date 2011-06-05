@@ -157,8 +157,8 @@ namespace CodeBinding
             Contract.Ensures(Contract.Result<BindingBase>() != null);
 
             var visitor = new CustomConverterVisitor();
+            visitor.ProcessExpression(expression);
 
-            Expression converterExpression = visitor.ProcessExpression(expression);
             if (visitor.Bindings.Count == 0)
             {
                 throw new ArgumentException("expression has 0 binging sources");
@@ -167,8 +167,7 @@ namespace CodeBinding
             {
                 Binding result = visitor.Bindings[0];
                 result.Mode = mode;
-                result.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                if (converterExpression != null)
+                if (visitor.ConverterNeeded)
                 {
                     result.Converter = new ExpressionValueConverter(expression);
                 }
@@ -178,7 +177,6 @@ namespace CodeBinding
             {
                 MultiBinding result = new MultiBinding();
                 result.Mode = BindingMode.OneWay;
-                result.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 foreach (var binding in visitor.Bindings)
                 {
                     result.Bindings.Add(binding);
@@ -192,77 +190,103 @@ namespace CodeBinding
         internal class CustomConverterVisitor : ExpressionVisitor
         {
             public List<Binding> Bindings { get; private set; }
-            public List<ParameterExpression> Parameters { get; private set; }
-
+            public bool ConverterNeeded { get; private set; }
+            private StringBuilder m_StringBuilder;
+            
             public CustomConverterVisitor()
             {
                 Bindings = new List<Binding>();
-                Parameters = new List<ParameterExpression>();
+                m_StringBuilder = new StringBuilder();
             }
 
-            public void Reset()
+            public void ProcessExpression(Expression node)
             {
-                Bindings.Clear();
-                Parameters.Clear();
-            }
-
-            public Expression ProcessExpression(Expression node)
-            {
-                Expression result = base.Visit(node);
-                if (result.NodeType == ExpressionType.Parameter)
+                CreateBindingFromSimpleExpression(node);
+                if (Bindings.Count == 0)
                 {
-                    // No conversion is needed
-                    Parameters.Clear();
-                    result = null;
+                    ConverterNeeded = true;
+                    base.Visit(node);
                 }
-                return result;
             }
 
             protected override Expression VisitMember(MemberExpression node)
             {
-                string path;
-                Expression sourceExpression = ExtractPropertyPath(node, out path);
-
-                Expression<Func<object>> sourceLambda = Expression.Lambda<Func<object>>(sourceExpression);
-                object source = sourceLambda.Compile().Invoke();
-
-                // Assign public properties
-                Binding binging = new Binding();
-                binging.Source = source;
-                binging.Path = new System.Windows.PropertyPath(path);
-                Bindings.Add(binging);
-
-                // Substitute MemberExpression with ParameterExpression
-                var parameter = Expression.Parameter(node.Type, string.Format("p{0}", Parameters.Count));
-                Parameters.Add(parameter);
-                return parameter;
+                m_StringBuilder.Clear();
+                CreateBinding(node, m_StringBuilder, null);
+                return base.VisitMember(node);
             }
 
-            public static Expression ExtractPropertyPath(Expression expression, out string path)
+            /// <summary>
+            /// Try to create binding from simple Expression
+            /// </summary>
+            /// <remarks>
+            /// This method will create and add binding to Bindings collection
+            /// only if Expression is of type obj.Property
+            /// </remarks>
+            /// <param name="node">Expression</param>
+            private void CreateBindingFromSimpleExpression(Expression node)
             {
-
-                if (expression.NodeType == ExpressionType.MemberAccess)
+                if (node.NodeType == ExpressionType.MemberAccess)
                 {
-                    MemberExpression memberAccess = (MemberExpression)expression;
-                    if (memberAccess.Member is PropertyInfo)
+                    var member = (MemberExpression)node;
+                    var property = member.Member as PropertyInfo;
+                    if (property != null && member.Expression.NodeType == ExpressionType.Constant)
                     {
-                        PropertyInfo property = (PropertyInfo)memberAccess.Member;
-                        Expression result;
-                        string prefix;
-                        result = ExtractPropertyPath(memberAccess.Expression, out prefix);
-                        path = (prefix == null) ? property.Name : string.Format("{0}.{1}", prefix, property.Name);
-                        return result;
+                        var constant = (ConstantExpression)member.Expression;
+                        Binding binding = new Binding();
+                        binding.Source = constant.Value;
+                        binding.Path = new System.Windows.PropertyPath(property.Name);
+                        Bindings.Add(binding);
+                    }
+                }
+            }
+
+            private void CreateBinding(Expression node, StringBuilder path, Expression top)
+            {
+                if (node.NodeType == ExpressionType.MemberAccess)
+                {
+                    var member = (MemberExpression)node;
+                    var property = member.Member as PropertyInfo;
+                    if (property != null)
+                    {
+                        if (path.Length > 0)
+                        {
+                            path.Append(".");
+                        }
+                        path.Append(property.Name);
+                        CreateBinding(member.Expression, path, top);
+                    }
+                    else if (top == null)
+                    {
+                        CreateBinding(member.Expression, path, member);
                     }
                     else
                     {
-                        path = null;
-                        return expression;
+                        CreateBinding(member.Expression, path, top);
                     }
                 }
-                else
+                else if (node.NodeType == ExpressionType.Constant)
                 {
-                    path = null;
-                    return expression;
+                    object source = null;
+                    var constant = (ConstantExpression)node;
+                    if (top != null)
+                    {
+                        if (top.Type != typeof(object))
+                        {
+                            top = Expression.Convert(top, typeof(object));
+                        }
+                        Expression<Func<object>> sourceLambda = Expression.Lambda<Func<object>>(top);
+                        source = sourceLambda.Compile().Invoke();
+                    }
+                    else
+                    {
+                        source = constant.Value;
+                    }
+                    // Assign public properties
+                    Binding binding = new Binding();
+                    binding.Source = source;
+                    binding.Path = new System.Windows.PropertyPath(path.ToString());
+                    Bindings.Add(binding);
                 }
             }
         }
