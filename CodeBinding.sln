@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBinding.Rx.Test", "CodeBinding.Rx.Test\CodeBinding.Rx.Test.csproj", "{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CodeBinding.vsmdi
@@ -127,6 +129,16 @@ Global
 		{31807B71-F1B1-4B19-A049-B60CE2A46B48}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{31807B71-F1B1-4B19-A049-B60CE2A46B48}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{31807B71-F1B1-4B19-A049-B60CE2A46B48}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C4BB60C9-641A-452D-8D22-5A1340C2EC3A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

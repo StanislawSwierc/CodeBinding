@@ -33,7 +33,7 @@ namespace CodeBinding.Rx
             var instance = (ObservableBindingTarget<T>)d;
             lock (instance.m_Observers)
             {
-                foreach (var observer in instance.m_Observers)
+                foreach (var observer in instance.m_Observers.ToArray())
                 {
                     observer.OnNext(instance.Value);
                 }
@@ -62,14 +62,6 @@ namespace CodeBinding.Rx
 
         public void Dispose()
         {
-            lock (m_Observers)
-            {
-                foreach (var observer in m_Observers)
-                {
-                    observer.OnCompleted();
-                }
-                m_Observers.Clear();
-            }
             BindingOperations.ClearBinding(this, ObservableBindingTarget<T>.ValueProperty);
         }
     }

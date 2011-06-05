@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace CodeBinding.Test
 {
-    class GenericBindingTarget<T> : FrameworkElement
+    public class GenericBindingTarget<T> : FrameworkElement
     {
         public T Value
         {

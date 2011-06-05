@@ -120,6 +120,17 @@ namespace CodeBinding.Test
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
+        public void BindFromExpression_ComplexBinding_WrongInitialValue_ThrowsExeption()
+        {
+            var target = new GenericBindingTarget<int>();
+            var source1 = new GenericNotifyPropertyChanged<int>();
+            var source2 = new GenericNotifyPropertyChanged<GenericNotifyPropertyChanged<int>>();
+
+            BindingEx.BindFromExpression(() => target.Value == source1.Value + source2.Value.Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
         public void BindFromExpression_SimpleBinding_WrongValueSet_ThrowsExeption()
         {
             var target = new GenericBindingTarget<int>();
@@ -132,17 +143,6 @@ namespace CodeBinding.Test
             source.Value.Value = 1;
             Assert.AreEqual(1, target.Value);
             source.Value = null;
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void BindFromExpression_ComplexBinding_WrongInitialValue_ThrowsExeption()
-        {
-            var target = new GenericBindingTarget<int>();
-            var source1 = new GenericNotifyPropertyChanged<int>();
-            var source2 = new GenericNotifyPropertyChanged<GenericNotifyPropertyChanged<int>>();
-
-            BindingEx.BindFromExpression(() => target.Value == source1.Value + source2.Value.Value);
         }
 
         [TestMethod]

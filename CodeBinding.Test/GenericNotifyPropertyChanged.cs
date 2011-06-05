@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace CodeBinding.Test
 {
-    class GenericNotifyPropertyChanged<T> : INotifyPropertyChanged
+    public class GenericNotifyPropertyChanged<T> : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
