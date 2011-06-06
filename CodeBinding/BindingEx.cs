@@ -156,7 +156,7 @@ namespace CodeBinding
             Contract.Requires(expression != null);
             Contract.Ensures(Contract.Result<BindingBase>() != null);
 
-            var visitor = new CustomConverterVisitor();
+            var visitor = new BindingsGatheringVisitor();
             visitor.ProcessExpression(expression);
 
             if (visitor.Bindings.Count == 0)
@@ -187,13 +187,13 @@ namespace CodeBinding
             }
         }
 
-        internal class CustomConverterVisitor : ExpressionVisitor
+        internal class BindingsGatheringVisitor : ExpressionVisitor
         {
             public List<Binding> Bindings { get; private set; }
             public bool ConverterNeeded { get; private set; }
             private StringBuilder m_StringBuilder;
             
-            public CustomConverterVisitor()
+            public BindingsGatheringVisitor()
             {
                 Bindings = new List<Binding>();
                 m_StringBuilder = new StringBuilder();
