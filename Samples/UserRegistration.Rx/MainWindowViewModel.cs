@@ -38,7 +38,7 @@ namespace HelloReactiveUI
             // Here's the interesting part - we'll combine the change notifications
             // for Password and PasswordConfirmation, and that will determine when
             // we can hit the Ok button
-            canHitOk = ObservableEx.FromExpression(() =>
+            canHitOk = ObservableEx.Create(() =>
                 !string.IsNullOrEmpty(Password) &&
                 Password == PasswordConfirmation &&
                 Password.Length > 3);
