@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>CodeBinding</id>
+    <version>1.1.0.0</version>
+    <title>CodeBinding</title>
+    <authors>StanislawSwierc</authors>
+    <owners>StanislawSwierc</owners>
+    <licenseUrl>https://github.com/StanislawSwierc/CodeBinding/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/StanislawSwierc/CodeBinding</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Create bindings directly from lambda expressions using CodeBinding</description>
+    <summary>Create bindings directly from lambda expressions using CodeBinding</summary>
+    <language>es-US</language>
+    <tags>wpf binding</tags>
+  </metadata>
+</package>
