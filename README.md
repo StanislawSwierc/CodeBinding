@@ -5,7 +5,7 @@ CodeBinding
 Change log
 ----------
 
-1.1.0.0 (work in progress)
+1.1.0.0
 
 * Supported binding to any properties (not DependencyProperties)
 * New method 'IDisposable BindingEx.BindFromExpression<T>()' added
@@ -27,10 +27,11 @@ CodeBinding.Rx
 Change log
 ----------
 
-1.1.0.0 (work in progress)
+1.1.0.0
 
 * Added test projects
 * ObservableEx.FromExpression<T>() renamed to ObservableEx.Create<T>()
+* Fixed problem with OnError method not being called when expression throws an exception
 
 1.0.0.0
 
