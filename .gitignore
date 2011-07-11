@@ -10,3 +10,4 @@ Bin/
 obj/
 Obj/
 TestResults/
+Nuget/Releases/*
