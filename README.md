@@ -4,6 +4,9 @@ CodeBinding
 
 Change log
 ----------
+1.1.1.0
+
+* Fixed bug related to implicit conversion when binding to enum types
 
 1.1.0.0
 
@@ -26,6 +29,10 @@ CodeBinding.Rx
 
 Change log
 ----------
+
+1.1.1.0
+
+* Updated dependency on CodeBinding
 
 1.1.0.0
 

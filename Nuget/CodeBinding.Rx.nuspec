@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>CodeBinding.Rx</id>
-    <version>1.1.0.0</version>
+    <version>1.1.1.0</version>
     <title>CodeBinding.Rx</title>
     <authors>StanislawSwierc</authors>
     <owners>StanislawSwierc</owners>
@@ -14,7 +14,7 @@
     <language>es-US</language>
     <tags>wpf binding Rx Reactive Observable</tags>
     <dependencies>
-      <dependency id="CodeBinding" version="1.1.0.0" />
+      <dependency id="CodeBinding" version="1.1.1.0" />
       <dependency id="Rx-Main" version="1.0.10605" />
     </dependencies>
   </metadata>

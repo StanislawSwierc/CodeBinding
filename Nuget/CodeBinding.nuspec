@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>CodeBinding</id>
-    <version>1.1.0.0</version>
+    <version>1.1.1.0</version>
     <title>CodeBinding</title>
     <authors>StanislawSwierc</authors>
     <owners>StanislawSwierc</owners>
@@ -14,4 +14,7 @@
     <language>es-US</language>
     <tags>wpf binding</tags>
   </metadata>
+  <files>
+    <file src="lib\net40\CodeBinding.dll" target="lib\net40\CodeBinding.dll" />
+  </files>
 </package>
