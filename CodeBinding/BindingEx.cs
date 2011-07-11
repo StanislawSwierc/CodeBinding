@@ -49,8 +49,17 @@ namespace CodeBinding
             if (expression.Body.NodeType == ExpressionType.Equal)
             {
                 var binary = ((BinaryExpression)expression.Body);
-                right = binary.Right;
-                member = binary.Left as MemberExpression;
+                if (binary.Left.NodeType == ExpressionType.Convert &&
+                    binary.Right.NodeType == ExpressionType.Convert)
+                {
+                    right = ((UnaryExpression)binary.Right).Operand;
+                    member = ((UnaryExpression)binary.Left).Operand as MemberExpression;
+                }
+                else
+                {
+                    right = binary.Right;
+                    member = binary.Left as MemberExpression;
+                }
                 if (member != null && member.Member.MemberType != MemberTypes.Property)
                 {
                     // Invalidate member because it isn't a Property
