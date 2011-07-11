@@ -35,8 +35,9 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Reactive">
-      <HintPath>..\packages\Rx-Main.1.1.10425\lib\Net4\System.Reactive.dll</HintPath>
+    <Reference Include="System.Reactive, Version=1.0.10605.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Main.1.0.10605\lib\Net4\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
@@ -50,13 +51,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CodeBinding\CodeBinding.csproj">
       <Project>{5F5CB969-D0BB-4B5A-8141-1005881E23A8}</Project>
       <Name>CodeBinding</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

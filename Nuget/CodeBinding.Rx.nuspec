@@ -14,8 +14,11 @@
     <language>es-US</language>
     <tags>wpf binding Rx Reactive Observable</tags>
     <dependencies>
-      <dependency id="Rx-Main" version="1.1.10425" />
       <dependency id="CodeBinding" version="1.1.0.0" />
+      <dependency id="Rx-Main" version="1.0.10605" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="lib\net40\CodeBinding.Rx.dll" target="lib\net40\CodeBinding.Rx.dll" />
+  </files>
 </package>

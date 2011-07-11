@@ -38,8 +38,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Reactive">
-      <HintPath>..\packages\Rx-Main.1.1.10425\lib\Net4\System.Reactive.dll</HintPath>
+    <Reference Include="System.Reactive, Version=1.0.10605.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Main.1.0.10605\lib\Net4\System.Reactive.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -52,9 +53,6 @@
     <Compile Include="ObservableExTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CodeBinding.Rx\CodeBinding.Rx.csproj">
       <Project>{A83663D3-6899-4E65-AC31-C076AF32197A}</Project>
       <Name>CodeBinding.Rx</Name>
@@ -63,6 +61,9 @@
       <Project>{31807B71-F1B1-4B19-A049-B60CE2A46B48}</Project>
       <Name>CodeBinding.Test</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
